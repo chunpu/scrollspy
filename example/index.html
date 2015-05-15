@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+	<script src="./bundle.js"></script>
+	<style>
+	p {
+		margin: 100px auto;
+		width: 500px;
+		height: 300px;
+		background: #ccc;
+		opacity: 0;
+		transition: all 0.4s ease-in-out;
+		color: #fff;
+		text-align: center;
+		line-height: 300px;
+		font-size: 18px;
+		font-family: Consolas;
+	}
+
+	.once {
+		width: 800px;
+	}
+
+	.show {
+		visibility: visible;
+		opacity: 1;
+	}
+	</style>
+</head>
+<body>
+	<p></p>
+	<p class="once">only animate once</p>
+	<p></p>
+	<p></p>
+	<p class="once">once animate once</p>
+	<p></p>
+	<p></p>
+</body>
+</html>
