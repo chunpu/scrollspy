@@ -43,7 +43,6 @@ exports.arr = arr
 exports.absent = {
 	  scrollin: _.noop
 	, scrollout: _.noop
-	, delay: 0
 	, isInView: false
 	, once: false // scroll in and remove event
 }

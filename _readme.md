@@ -1,6 +1,8 @@
 Usage
 ===
 
+[Demo Page](http://chunpu.github.io/scrollspy/example/)
+
 ```js
 var scrollspy = require('scrollspy')
 
