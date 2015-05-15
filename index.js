@@ -86,8 +86,8 @@ function getOffset(el) {
 		offset = $el.offset()
 	}
 	return _.extend(offset, {
-		height: $el.height(),
-		width: $el.width()
+		height: $el.innerHeight(),
+		width: $el.innerWidth()
 	})
 }
 
