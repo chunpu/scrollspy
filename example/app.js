@@ -9,10 +9,10 @@ function init() {
 		var me = this
 		var $me = $(me)
 		scrollspy.add(me, {
-			scrollin: function() {
+			scrollIn: function() {
 				$me.addClass('show').css('background', colors[~~(Math.random() * colors.length)])
 			},
-			scrollout: function() {
+			scrollOut: function() {
 				$me.removeClass('show').css('background', null)
 			},
 			once: -1 != $me.text().indexOf('once')

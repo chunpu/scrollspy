@@ -33,10 +33,10 @@ $('.scroll-class').each(function() {
 	var me = this
 	var $me = $(me)
 	scrollspy.add(me, {
-		scrollin: function() {
+		scrollIn: function() {
 			$me.addClass('show')
 		},
-		scrollout: function() {
+		scrollOut: function() {
 			$me.removeClass('show')
 		}
 	})
@@ -48,13 +48,16 @@ Api
 
 #### Add
 
-`scrollspy.add(element, opt)`
+- `scrollspy.add(element, opt)`
+- `scrollspy.add(element, scrollIn, scrollOut[, opt])`
+- `scrollspy.add(element, className[, opt])`
 
 options
 
-- `scrollin` scroll in handler
-- `scrollout` scroll out handler
-- `once` if trigger scroll in or out just once, default false
+- `scrollIn` scroll in handler
+- `scrollOut` scroll out handler
+- `className` add class when scroll in, remove class when scroll out
+- `once` if trigger scroll in(no scroll out) just once, default false
 
 License
 ---

@@ -3,7 +3,9 @@ var name = 'scrollspy'
 var _ = require('min-util')
 var cooled = require('cooled')
 var debug = require('min-debug')(name)
+var Reopt = require('reopt')
 
+var is = _.is
 var optName = name + '-option'
 var arr = [] // all elements to spy scroll
 var hasInited = false
@@ -16,11 +18,12 @@ $(function() {
 exports.name = name
 exports.arr = arr
 exports.absent = {
-	  scrollin: _.noop
-	, scrollout: _.noop
+	  scrollIn: _.noop
+	, scrollOut: _.noop
 	, isInView: false
 	, once: false // scroll in and remove event
 }
+exports.interval = 300
 
 exports.init = function() {
 	if (hasInited) return
@@ -30,7 +33,7 @@ exports.init = function() {
 
 	var check =	cooled(function(ev) {
 		exports.check(ev)
-	}, 300)
+	}, exports.interval)
 
 	var evName = _.map('scroll resize'.split(' '), function(val) {
 		return [val, name].join('.')
@@ -49,7 +52,34 @@ exports.check = function(ev) {
 	})
 }
 
-exports.add = function(el, opt) {
+// el, opt
+// el, scrollin, scrollout, opt
+// el, className, opt
+var addReopt = new Reopt({
+	  el: 'element'
+	, scrollIn: 'function'
+	, scrollOut: 'function'
+	, opt: 'object undefined'
+	, className: 'string'
+}, [
+	  'el opt'
+	, 'el scrollIn scrollOut opt'
+	, 'el className opt'
+])
+
+exports.add = function() {
+	var args = arguments
+	var opt = addReopt.get(args)
+	if (!opt) return debug('unknown args', args)
+	opt = _.extend({}, exports.absent, opt, opt.opt)
+	var el = opt.el
+	opt = _.only(opt, 'scrollIn scrollOut className once')
+	$(el).data(optName, opt)
+	arr.push(el)
+	check(el)
+}
+
+exports.add2 = function(el, opt) {
 	opt = _.extend({}, exports.absent, opt)
 	$(el).data(optName, opt)
 	arr.push(el)
@@ -103,12 +133,24 @@ function check(el, ev) {
 
 	debug('is inview', isInView, el)
 	opt.isInView = isInView
+	var cname = opt.className
 	if (isInView) {
-		opt.scrollin.call(el, ev)
+		// scrollIn
+		if (cname) {
+			$el.addClass(cname)
+		} else {
+			opt.scrollIn.call(el, ev)
+		}
+		if (opt.once) {
+			// scroll in once
+			arr.splice(arr.indexOf(el), 1)
+		}
 	} else {
-		opt.scrollout.call(el, ev)
-	}
-	if (opt.once) {
-		arr.splice(arr.indexOf(el), 1)
+		// scroll out
+		if (cname) {
+			$el.removeClass(cname)
+		} else {
+			opt.scrollOut.call(el, ev)
+		}
 	}
 }
