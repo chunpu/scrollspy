@@ -9,15 +9,20 @@ function init() {
 	$('p').each(function() {
 		var me = this
 		var $me = $(me)
-		scrollspy.add(me, {
-			scrollIn: function() {
+		if ($me.hasClass('once')) {
+			scrollspy.add(me, function() {
 				$me.addClass('show').css('background', colors[~~(Math.random() * colors.length)])
-			},
-			scrollOut: function() {
-				$me.removeClass('show').css('background', null)
-			},
-			once: -1 != $me.text().indexOf('once')
-		})
+			})
+		} else {
+			scrollspy.add(me, {
+				scrollIn: function() {
+					$me.addClass('show').css('background', colors[~~(Math.random() * colors.length)])
+				},
+				scrollOut: function() {
+					$me.removeClass('show').css('background', null)
+				}
+			})
+		}
 	})
 }
 
@@ -44,9 +49,7 @@ exports.name = name
 exports.arr = arr
 exports.absent = {
 	  scrollIn: _.noop
-	, scrollOut: _.noop
 	, isInView: false
-	, once: false // scroll in and remove event
 }
 exports.interval = 300
 
@@ -77,9 +80,6 @@ exports.check = function(ev) {
 	})
 }
 
-// el, opt
-// el, scrollin, scrollout, opt
-// el, className, opt
 var addReopt = new Reopt({
 	  el: 'element'
 	, scrollIn: 'function'
@@ -90,6 +90,7 @@ var addReopt = new Reopt({
 	  'el opt'
 	, 'el scrollIn scrollOut opt'
 	, 'el className opt'
+	, 'el scrollIn' // scroll in once
 ])
 
 exports.add = function() {
@@ -98,14 +99,11 @@ exports.add = function() {
 	if (!opt) return debug('unknown args', args)
 	opt = _.extend({}, exports.absent, opt, opt.opt)
 	var el = opt.el
-	opt = _.only(opt, 'scrollIn scrollOut className once')
-	$(el).data(optName, opt)
-	arr.push(el)
-	check(el)
-}
-
-exports.add2 = function(el, opt) {
-	opt = _.extend({}, exports.absent, opt)
+	opt = _.only(opt, 'scrollIn scrollOut className once isInView')
+	if (!opt.scrollOut && false !== opt.once) {
+		// once two
+		opt.once = true
+	}
 	$(el).data(optName, opt)
 	arr.push(el)
 	check(el)

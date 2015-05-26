@@ -8,14 +8,19 @@ function init() {
 	$('p').each(function() {
 		var me = this
 		var $me = $(me)
-		scrollspy.add(me, {
-			scrollIn: function() {
+		if ($me.hasClass('once')) {
+			scrollspy.add(me, function() {
 				$me.addClass('show').css('background', colors[~~(Math.random() * colors.length)])
-			},
-			scrollOut: function() {
-				$me.removeClass('show').css('background', null)
-			},
-			once: -1 != $me.text().indexOf('once')
-		})
+			})
+		} else {
+			scrollspy.add(me, {
+				scrollIn: function() {
+					$me.addClass('show').css('background', colors[~~(Math.random() * colors.length)])
+				},
+				scrollOut: function() {
+					$me.removeClass('show').css('background', null)
+				}
+			})
+		}
 	})
 }
