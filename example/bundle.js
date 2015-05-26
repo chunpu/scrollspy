@@ -39,9 +39,7 @@ var is = _.is
 var optName = name + '-option'
 var arr = [] // all elements to spy scroll
 var hasInited = false
-
-// simple inject
-eval('var $ = window.$ || require("jquery")')
+var $ = global.$
 
 exports.name = name
 exports.arr = arr
@@ -50,6 +48,10 @@ exports.absent = {
 	, isInView: false
 }
 exports.interval = 300
+
+exports.set$ = function(val) {
+	$ = val
+}
 
 exports.init = function() {
 	if (hasInited) return
@@ -165,7 +167,7 @@ function check(el, ev) {
 		}
 		if (opt.once) {
 			// scroll in once
-			arr.splice(arr.indexOf(el), 1)
+			arr.splice(_.indexOf(arr, el), 1)
 		}
 	} else {
 		// scroll out
