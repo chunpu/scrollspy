@@ -10,10 +10,8 @@ var optName = name + '-option'
 var arr = [] // all elements to spy scroll
 var hasInited = false
 
-$(function() {
-	// auto init
-	exports.init()
-})
+// simple inject
+eval('var $ = window.$ || require("jquery")')
 
 exports.name = name
 exports.arr = arr
@@ -71,11 +69,12 @@ exports.add = function() {
 	var el = opt.el
 	opt = _.only(opt, 'scrollIn scrollOut className once isInView')
 	if (!opt.scrollOut && false !== opt.once) {
-		// once two
+		// also once
 		opt.once = true
 	}
 	$(el).data(optName, opt)
 	arr.push(el)
+	exports.init()
 	check(el)
 }
 
