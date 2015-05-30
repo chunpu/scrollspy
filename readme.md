@@ -59,6 +59,12 @@ options
 - `className` add class when scroll in, remove class when scroll out
 - `once` if trigger scroll in(no scroll out) just once, default false
 
+#### Remove
+
+remove element from checklist elements when scrolling
+
+- `scrollspy.remove(el)`
+
 License
 ---
 

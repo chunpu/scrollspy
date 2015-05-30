@@ -75,9 +75,19 @@ exports.add = function() {
 		opt.once = true
 	}
 	$(el).data(optName, opt)
+	if (0 == arr.length) {
+		exports.init()
+	}
 	arr.push(el)
-	exports.init()
 	check(el)
+}
+
+exports.remove = function(el) {
+	arr.splice(_.indexOf(arr, el), 1)
+	if (0 == arr.length) {
+		$(global).off('.' + name)
+		hasInited = false
+	}
 }
 
 exports.isInView = isInView
@@ -95,7 +105,7 @@ function isInView(el, winOffset) {
 	return false
 }
 
-global.isInView = isInView // test
+// global.isInView = isInView // test
 
 function getOffset(el) {
 	var $el = $(el)
@@ -137,7 +147,7 @@ function check(el, ev) {
 		}
 		if (opt.once) {
 			// scroll in once
-			arr.splice(_.indexOf(arr, el), 1)
+			exports.remove(el)
 		}
 	} else {
 		// scroll out

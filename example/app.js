@@ -1,5 +1,7 @@
 var scrollspy = require('../')
 
+global.scrollspy = scrollspy
+
 var colors = 'lightseagreen forestgreen goldenrod dodgerblue darkorchid crimson'.split(' ')
 
 $(init)

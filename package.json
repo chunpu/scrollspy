@@ -1,6 +1,6 @@
 {
   "name": "scrollspy",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "scrollspy for jQuery",
   "main": "index.js",
   "scripts": {
