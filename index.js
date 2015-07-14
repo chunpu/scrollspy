@@ -1,7 +1,6 @@
 var name = 'scrollspy'
 
 var _ = require('min-util')
-var cooled = require('cooled')
 var debug = require('min-debug')(name)
 var Reopt = require('reopt')
 
@@ -29,7 +28,7 @@ exports.init = function() {
 	debug('init')
 	hasInited = true
 
-	var check =	cooled(function(ev) {
+	var check = _.throttle(function(ev) {
 		exports.check(ev)
 	}, exports.interval)
 
