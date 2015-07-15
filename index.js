@@ -93,14 +93,18 @@ exports.isInView = isInView
 
 function isInView(el, winOffset) {
 	var $el = $(el)
-	if (!$el.is(':visible')) return false
 	
 	var offset = getOffset(el)
 	winOffset = winOffset || getOffset(global)
 	
-	var isVerticalIn = offset.top + offset.height >= winOffset.top && offset.top <= winOffset.top + winOffset.height
-	var isHorizonalIn = offset.left + offset.width >= winOffset.left && offset.left <= winOffset.left + winOffset.width
-	if (isVerticalIn && isHorizonalIn) return true
+	if (offset.height > 0) {
+		// not display none
+		var isVerticalIn = offset.top + offset.height >= winOffset.top && offset.top <= winOffset.top + winOffset.height
+		var isHorizonalIn = offset.left + offset.width >= winOffset.left && offset.left <= winOffset.left + winOffset.width
+		if (isVerticalIn && isHorizonalIn) {
+			return true
+		}
+	}
 	return false
 }
 
