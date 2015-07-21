@@ -45,4 +45,4 @@ remove element from checklist elements when scrolling
 Tip
 ---
 
-> elements been scroll spied should have size, which means element's offsetWidth and offsetHeight should not both be 0, so `display: none;` is useless. "width=100 and height=0" is ok
+> elements been scroll spied should be shown, which means `display: none` will be ignored

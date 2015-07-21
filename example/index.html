@@ -29,9 +29,19 @@
 	.top {
 		background: #ddd;
 	}
-	
+
+	.right {
+		background: blue;
+		float: right;
+	}
+
+	.hide {
+		display: none;
+	}
+
 	.expand {
-		height: 50px;
+		min-height: 50px;
+		min-width: 50px;
 	}
 
 	.box {
@@ -51,7 +61,12 @@
 	</style>
 </head>
 <body>
+	<div class="right"></div>
 	<div class="top"></div>
+	<div class="hide">
+		<div class="top">
+		</div>
+	</div>
 	<div class="box">
 		<p></p>
 		<p></p>

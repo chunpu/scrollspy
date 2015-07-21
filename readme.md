@@ -22,7 +22,7 @@ npm i scrollspy
 ```
 
 Usage
-===
+---
 
 [Demo Page](http://chunpu.github.io/scrollspy/example/)
 
@@ -44,7 +44,7 @@ $('.scroll-class').each(function() {
 ```
 
 Api
-===
+---
 
 #### Add
 
@@ -64,6 +64,11 @@ options
 remove element from checklist elements when scrolling
 
 - `scrollspy.remove(el)`
+
+Tip
+---
+
+> elements been scroll spied should be shown, which means `display: none` will be ignored
 
 License
 ---

@@ -50,7 +50,7 @@ exports.check = function(ev) {
 }
 
 var addReopt = new Reopt({
-	  el: 'element'
+	  el: '*'
 	, scrollIn: 'function'
 	, scrollOut: 'function'
 	, opt: 'object undefined'
@@ -67,18 +67,19 @@ exports.add = function() {
 	var opt = addReopt.get(args)
 	if (!opt) return debug('unknown args', args)
 	opt = _.extend({}, exports.absent, opt, opt.opt)
-	var el = opt.el
-	opt = _.only(opt, 'scrollIn scrollOut className once isInView')
+	var $el = $(opt.el)
 	if (!opt.scrollOut && false !== opt.once) {
 		// also once
 		opt.once = true
 	}
-	$(el).data(optName, opt)
-	if (0 == arr.length) {
+	if (0 == arr.length && $el.length) {
 		exports.init()
 	}
-	arr.push(el)
-	check(el)
+	_.each($el, function(el) {
+		$(el).data(optName, _.only(opt, 'scrollIn scrollOut className once isInView'))
+		arr.push(el)
+		check(el)
+	})
 }
 
 exports.remove = function(el) {
@@ -97,7 +98,8 @@ function isInView(el, winOffset) {
 	var offset = getOffset(el)
 	winOffset = winOffset || getOffset(global)
 	
-	if (hasSize(el)) {
+	// if (hasSize(el)) {
+	if (!isHide(el)) {
 		// not display none
 		var isVerticalIn = offset.top + offset.height >= winOffset.top && offset.top <= winOffset.top + winOffset.height
 		var isHorizonalIn = offset.left + offset.width >= winOffset.left && offset.left <= winOffset.left + winOffset.width
@@ -108,11 +110,20 @@ function isInView(el, winOffset) {
 	return false
 }
 
+/*
 function hasSize(el) {
 	if (el.offsetWidth || el.offsetHeight) {
 		return true
 	}
 	return false
+}
+*/
+function isHide(el) {
+	var rect = el.getBoundingClientRect()
+	for (var key in rect) {
+		if (rect[key] > 0) return false
+	}
+	return true
 }
 
 // global.isInView = isInView // test
