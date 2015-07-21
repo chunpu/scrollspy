@@ -27,6 +27,13 @@ function init() {
 			})
 		}
 	})
+
+	var $top = $('.top')
+	scrollspy.add($top[0], function() {
+		$top.addClass('expand')
+	}, function() {
+		$top.removeClass('expand')
+	})
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
@@ -131,13 +138,20 @@ function isInView(el, winOffset) {
 	var offset = getOffset(el)
 	winOffset = winOffset || getOffset(global)
 	
-	if (offset.height > 0) {
+	if (hasSize(el)) {
 		// not display none
 		var isVerticalIn = offset.top + offset.height >= winOffset.top && offset.top <= winOffset.top + winOffset.height
 		var isHorizonalIn = offset.left + offset.width >= winOffset.left && offset.left <= winOffset.left + winOffset.width
 		if (isVerticalIn && isHorizonalIn) {
 			return true
 		}
+	}
+	return false
+}
+
+function hasSize(el) {
+	if (el.offsetWidth || el.offsetHeight) {
+		return true
 	}
 	return false
 }

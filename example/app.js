@@ -25,4 +25,11 @@ function init() {
 			})
 		}
 	})
+
+	var $top = $('.top')
+	scrollspy.add($top[0], function() {
+		$top.addClass('expand')
+	}, function() {
+		$top.removeClass('expand')
+	})
 }
