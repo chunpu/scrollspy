@@ -9,6 +9,7 @@ var is = _.is
 var optName = name + '-option'
 var arr = [] // all elements to spy scroll
 var hasInited = false
+var $ = global.$
 
 exports.name = name
 exports.arr = arr
@@ -17,6 +18,10 @@ exports.absent = {
 	, isInView: false
 }
 exports.interval = 300
+
+exports.set$ = function(val) {
+	$ = val
+}
 
 exports.init = function() {
 	if (hasInited) return
