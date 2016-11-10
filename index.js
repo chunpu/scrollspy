@@ -1,14 +1,14 @@
 var name = 'scrollspy'
 
+// need in jQuery env
 var _ = require('min-util')
-var debug = require('min-debug')(name)
+var debug = require('min-log').getLogger(name).getLevelFunction()
 var Reopt = require('reopt')
 
 var is = _.is
 var optName = name + '-option'
 var arr = [] // all elements to spy scroll
 var hasInited = false
-var $ = global.$
 
 exports.name = name
 exports.arr = arr
@@ -17,10 +17,6 @@ exports.absent = {
 	, isInView: false
 }
 exports.interval = 300
-
-exports.set$ = function(val) {
-	$ = val
-}
 
 exports.init = function() {
 	if (hasInited) return
@@ -140,9 +136,20 @@ function getOffset(el) {
 	} else {
 		offset = $el.offset()
 	}
+
+	// zepto has no innerHeight
+	var height
+	var width
+	if ($el.innerHeight) {
+		height = $el.innerHeight()
+		width = $el.innerWidth()
+	} else {
+		height = $el.height()
+		width = $el.width()
+	}
 	return _.extend(offset, {
-		height: $el.innerHeight(),
-		width: $el.innerWidth()
+		height: height,
+		width: width
 	})
 }
 
