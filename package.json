@@ -1,19 +1,19 @@
 {
   "name": "scrollspy",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "scrollspy for jQuery",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify example/app.js > example/bundle.js",
+    "build": "webpack example/app.js --output-filename example/bundle.js",
     "readme": "pretty-readme > readme.md"
   },
   "author": "chunpu",
   "license": "ISC",
   "dependencies": {
-    "min-log": "^1.8.0",
-    "min-util": "^1.3.3",
-    "reopt": "^1.0.1"
+    "min-log": "latest",
+    "min-util": "latest",
+    "reopt": "latest"
   },
   "directories": {
     "example": "example"
