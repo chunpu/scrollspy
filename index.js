@@ -77,7 +77,7 @@ exports.add = function() {
 		exports.init()
 	}
 	_.each($el, function(el) {
-		$(el).data(optName, _.only(opt, 'scrollIn scrollOut className once isInView'))
+		$(el).data(optName, _.only(opt, 'scrollIn scrollOut className once isInView offset'))
 		arr.push(el)
 		check(el)
 	})
@@ -95,15 +95,19 @@ exports.isInView = isInView
 
 function isInView(el, winOffset) {
 	var $el = $(el)
-	
+
 	var offset = getOffset(el)
 	winOffset = winOffset || getOffset(global)
-	
+
+	var offsetOffset = $el.data(optName).offset || {top: 0, left: 0};
+	offsetOffset.top = offsetOffset.top || 0;
+	offsetOffset.left = offsetOffset.left || 0;
+
 	// if (hasSize(el)) {
 	if (!isHide(el)) {
 		// not display none
-		var isVerticalIn = offset.top + offset.height >= winOffset.top && offset.top <= winOffset.top + winOffset.height
-		var isHorizonalIn = offset.left + offset.width >= winOffset.left && offset.left <= winOffset.left + winOffset.width
+		var isVerticalIn = offset.top + offset.height > winOffset.top && offset.top + offsetOffset.top < winOffset.top + winOffset.height
+		var isHorizonalIn = offset.left + offset.width > winOffset.left && offset.left + offsetOffset.left < winOffset.left + winOffset.width
 		if (isVerticalIn && isHorizonalIn) {
 			return true
 		}
