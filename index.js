@@ -9,7 +9,7 @@ var is = _.is
 var optName = name + '-option'
 var arr = [] // all elements to spy scroll
 var hasInited = false
-var $ = global.$
+var $ = global.$ || jQuery
 
 exports.name = name
 exports.arr = arr
